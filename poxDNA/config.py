@@ -7,10 +7,17 @@ Created on 25 lug 2016
 import os
 
 class Config(object):
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/poxdna.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = os.urandom(24)
-    SECURITY_LOGIN_USER_TEMPLATE = "user/login.html"
+    
+    SECURITY_CONFIRMABLE = True
+    SECURITY_REGISTERABLE = True
+    SECURITY_RECOVERABLE = True
+    SECURITY_TRACKABLE = True
     
 class DebugConfig(Config):
-    DEBUG=True
+    DEBUG = True
+    SECURITY_CONFIRMABLE = False
+    
     

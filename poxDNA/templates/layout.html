@@ -15,16 +15,15 @@
 </head>
 <body>
 	<div id="sidedrawer" class="mui--no-user-select">
-		<div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">poxDNA</div>
+		<div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title"><a href="{{ url_for('home') }}">poxDNA</a></div>
 		<div class="mui-divider"></div>
 		<ul>
-			<li><strong>
 			{% if not current_user.is_authenticated %} 
-			<a href="{{ url_for('security.login') }}">Log in</a> 
+			<li><strong><a href="{{ url_for('security.login') }}">Log in</a></strong></li> 
 			{% else %} 
-			<a href="{{ url_for('security.logout') }}">Log out</a> 
+			<li><strong><a href="{{ url_for('security.logout') }}">Log out</a></strong></li>
+			<li><strong><a href="{{ url_for('projects') }}">My projects</a></strong></li> 
 			{% endif %}
-			</strong></li>
 		</ul>
 	</div>
 
