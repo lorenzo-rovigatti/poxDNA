@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- load external libraries -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- load MUI -->
+<link href="{{ url_for('static', filename='mui-0.6.8/css/mui.min.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ url_for('static', filename='mui-0.6.8/js/mui.min.js') }}"></script>
+<!-- poxDNA own's stuff -->
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+	<div id="sidedrawer" class="mui--no-user-select">
+		<div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">poxDNA</div>
+		<div class="mui-divider"></div>
+		<ul>
+			<li><strong>
+			{% if not current_user.is_authenticated %} 
+			<a href="{{ url_for('security.login') }}">Log in</a> 
+			{% else %} 
+			<a href="{{ url_for('security.logout') }}">Log out</a> 
+			{% endif %}
+			</strong></li>
+		</ul>
+	</div>
+
+	<header id="header">
+		<div class="mui-appbar mui--appbar-line-height">
+			<div class="mui-container-fluid">
+				<a class="sidedrawer-toggle mui--visible-xs-inline-block js-show-sidedrawer">☰</a> <a class="sidedrawer-toggle mui--hidden-xs js-hide-sidedrawer">☰</a> <span class="mui--text-title mui--visible-xs-inline-block">Brand.io</span>
+			</div>
+		</div>
+	</header>
+
+	<div class="mui-container">
+		<div class="mui--appbar-height"></div>
+		<div class="mui-panel">
+			{% block body %}
+			<h1>poxDNA</h1>
+			{% endblock %}
+		</div>
+	</div>
+</body>
+</html>
