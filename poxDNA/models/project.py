@@ -15,3 +15,4 @@ class Project(db.Model):
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
     
+    users = db.relationship('User', secondary=projects_users, backref=db.backref('user', lazy='dynamic'))

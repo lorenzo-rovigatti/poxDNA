@@ -12,16 +12,16 @@
 <!-- poxDNA own's stuff -->
 <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
 <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<title>{{ config['POXDNA_TITLE'] }}</title>
 </head>
 <body>
 	<div id="sidedrawer" class="mui--no-user-select">
-		<div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title"><a href="{{ url_for('home') }}">poxDNA</a></div>
+		<div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title"><h2><a href="{{ url_for('home') }}">poxDNA</a></h2></div>
 		<div class="mui-divider"></div>
 		<ul>
-			{% if not current_user.is_authenticated %} 
-			<li><strong><a href="{{ url_for('security.login') }}">Log in</a></strong></li> 
-			{% else %} 
-			<li><strong><a href="{{ url_for('security.logout') }}">Log out</a></strong></li>
+			{% include "security/_menu.html" %}
+			{% if current_user.is_authenticated %} 
 			<li><strong><a href="{{ url_for('projects') }}">My projects</a></strong></li> 
 			{% endif %}
 		</ul>

@@ -16,8 +16,9 @@ class Config(object):
     SECURITY_RECOVERABLE = True
     SECURITY_TRACKABLE = True
     
+    POXDNA_TITLE = "poxDNA - An oxDNA webapp"
+    
 class DebugConfig(Config):
     DEBUG = True
     SECURITY_CONFIRMABLE = False
-    
     

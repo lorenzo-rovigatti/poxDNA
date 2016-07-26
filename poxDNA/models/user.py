@@ -31,11 +31,8 @@ class User(db.Model, UserMixin):
     current_login_ip = db.Column(db.String(15))
     login_count = db.Column(db.Integer)
     
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
-    
-    projects = db.relationship('Project', secondary=projects_users,
-                            backref=db.backref('projects', lazy='dynamic'))
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('user', lazy='dynamic'))
+    projects = db.relationship('Project', secondary=projects_users, backref=db.backref('project', lazy='dynamic'))
     
 def init(datastore):
     adm_role = datastore.create_role(name="admin", description="The administrator")
