@@ -1,0 +1,10 @@
+{% extends "layout.html" %} 
+{% block body %}
+{% from "_form_macros.html" import render_textfield, render_submit %}
+<h1>Resend confirmation instructions</h1>
+<form action="{{ url_for_security('send_confirmation') }}" method="POST" name="send_confirmation_form">
+  {{ send_confirmation_form.hidden_tag() }}
+  {{ render_textfield(send_confirmation_form.email) }}
+  {{ render_submit(send_confirmation_form.submit) }}
+</form>
+{% endblock %}

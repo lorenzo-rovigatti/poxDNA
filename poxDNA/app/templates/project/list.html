@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>My projects</h1>
+
+<ul class=entries>
+{% for project in projects %}
+    <li><h2>{{ project.name }}</h2>{{ project.description|safe }}
+{% else %}
+    <li><em>There are no projects associated to this account. Go start one!</em>
+{% endfor %}
+</ul>
+
+<div>
+	<a href="" class="mui-btn mui-btn--primary">New project</a>
+</div>
+{% endblock %}
