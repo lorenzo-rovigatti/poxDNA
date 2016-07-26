@@ -59,7 +59,11 @@ class User(db.Model, UserMixin):
     
 class Project(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
+    title = db.Column(db.String(80))
+    description = db.Column(db.Text())
     
     users = db.relationship('User', secondary=projects_users, backref=db.backref('user', lazy='dynamic'))
+    
+    def __init__(self, title="", description=""):
+        self.title = title
+        self.description = description

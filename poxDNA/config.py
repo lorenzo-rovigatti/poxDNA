@@ -16,6 +16,7 @@ class Config(object):
     SECURITY_RECOVERABLE = True
     SECURITY_TRACKABLE = True
     SECURITY_CHANGEABLE = True
+    SECURITY_POST_LOGIN_VIEW = "/projects"
     
     POXDNA_TITLE = "poxDNA - An oxDNA webapp"
     

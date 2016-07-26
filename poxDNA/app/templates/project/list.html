@@ -2,15 +2,21 @@
 {% block body %}
 <h1>My projects</h1>
 
-<ul class=entries>
+<ul class="entries mui-list--unstyled">
 {% for project in projects %}
-    <li><h2>{{ project.name }}</h2>{{ project.description|safe }}
+    <li>
+    	<h2>
+    		<a href="{{ url_for('project_view', id_project=project.id) }}">{{ project.title }}</a> 
+    		(<a href="{{ url_for('project', id_project=project.id) }}">edit</a>,
+    		<a href="{{ url_for('project_delete', id_project=project.id) }}">delete</a>)</h2>
+    	{{ project.description|safe }}
+    </li>
 {% else %}
-    <li><em>There are no projects associated to this account. Go start one!</em>
+    <li><em>There are no projects associated to this account. Go start one!</em></li>
 {% endfor %}
 </ul>
 
 <div>
-	<a href="" class="mui-btn mui-btn--primary">New project</a>
+	<a href="{{ url_for('project') }}" class="mui-btn mui-btn--primary">New project</a>
 </div>
 {% endblock %}

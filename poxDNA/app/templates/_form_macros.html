@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro render_textfield(field) %}
-<div class="mui-textfield">
+<div class="mui-textfield mui-textfield--float-label">
 	{{ field(**kwargs)|safe }} {{ field.label }}
 	{{ render_errors(field) }}
 </div>
@@ -25,8 +25,8 @@
 </div>
 {% endmacro %}
 
-{% macro render_submit(field) %}
-<button class="mui-btn mui-btn--primary" type="submit">{{ field.label.text }}</button>
+{% macro render_submit(text) %}
+<button class="mui-btn mui-btn--primary" type="submit">{{ text }}</button>
 {% endmacro %}
 
 {% macro render_field(field) %}
