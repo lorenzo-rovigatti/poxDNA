@@ -1,0 +1,12 @@
+{% extends "layout.html" %} 
+{% block body %}
+{% from "_form_macros.html" import render_textfield, render_checkbox, render_field, render_submit %}
+{% include "security/_messages.html" %}
+<h1>{{ action }} a project</h1>
+<form method="POST" name="project_form">
+  {{ form.hidden_tag() }}
+  {{ render_textfield(form.title) }}
+  {{ render_textfield(form.description) }}
+  {{ render_submit(action) }}
+</form>
+{% endblock %}

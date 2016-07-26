@@ -1,6 +1,0 @@
-flask
-flask-security
-flask-sqlalchemy
-flask-mail
-flask-restful
-sqlalchemy-utils
