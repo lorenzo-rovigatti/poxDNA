@@ -2,4 +2,25 @@
 {% block body %}
 <h1>{{ project.title }}</h1>
 <span class="mui--text-justify">{{ project.description }}</span>
+
+<div class="mui-panel">
+<h2>Tasks</h2>
+<ul class="entries mui-list--unstyled">
+{% for task in project.tasks %}
+    <li>
+    	<h2>
+    		<a href="{{ url_for('task_view', id_project=project.id, id_task=task.id) }}">{{ task.title }}</a> 
+    		(<a href="{{ url_for('task', id_project=project.id, id_task=task.id) }}">edit</a>,
+    		<a href="{{ url_for('task_delete', id_project=project.id, id_task=task.id) }}">delete</a>)</h2>
+    	{{ task.description|safe }}
+    </li>
+{% else %}
+    <li><em>There are no tasks associated to this project, add one!</em></li>
+{% endfor %}
+</ul>
+
+<div>
+	<a href="{{ url_for('task', id_project=project.id) }}" class="mui-btn mui-btn--primary">Add a task</a>
+</div>
+</div>
 {% endblock %}

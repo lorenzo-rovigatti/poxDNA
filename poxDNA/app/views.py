@@ -5,10 +5,23 @@ Created on 26 Jul 2016
 '''
 
 from app import app
-from flask import render_template, redirect
+from flask import render_template, redirect, abort
 from flask_security import login_required
 from flask_security.core import current_user
-from models import db, User, Project
+from models import db, User, Project, Task
+from functools import wraps
+
+def access_to_project_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if 'id_project' in kwargs:
+            project = Project.query.get(kwargs['id_project'])
+            if project == None or current_user not in project.users:
+                return abort(404)
+            
+        return func(*args, **kwargs)
+    
+    return decorated_view
 
 @app.route('/')
 def home():
@@ -28,6 +41,7 @@ def projects():
 @app.route('/project/new', methods=['GET', 'POST'])
 @app.route('/project/edit/<id_project>', methods=['GET', 'POST'])
 @login_required
+@access_to_project_required
 def project(id_project=None):
     from forms import ProjectForm
     if id_project != None:
@@ -49,6 +63,7 @@ def project(id_project=None):
 
 @app.route('/project/del/<id_project>')
 @login_required
+@access_to_project_required
 def project_delete(id_project):
     Project.query.filter_by(id=id_project).delete()
     db.session.commit()
@@ -56,6 +71,47 @@ def project_delete(id_project):
 
 @app.route('/project/<id_project>')
 @login_required
+@access_to_project_required
 def project_view(id_project):
     project = Project.query.filter_by(id=id_project).first()
     return render_template('project/view.html', project=project)
+
+
+@app.route('/project/<id_project>/task/new', methods=['GET', 'POST'])
+@app.route('/project/<id_project>/task/edit/<id_task>', methods=['GET', 'POST'])
+@login_required
+@access_to_project_required
+def task(id_project, id_task=None):
+    project = Project.query.get(id_project)
+    
+    from forms import TaskForm
+    if id_task != None:
+        task = task.query.get(id_task)
+        action = "Save"
+    else:
+        task = Task()
+        action = "Add"
+        
+    form = TaskForm(obj=task)
+    if form.validate_on_submit():
+        form.populate_obj(task)
+        db.session.add(task)
+        db.session.commit()
+        return redirect('/tasks')
+    
+    return render_template('project/task/form.html', form=form, action=action, project=project)
+
+@app.route('/project/<id_project>/task/del/<id_task>')
+@login_required
+@access_to_project_required
+def task_delete(id_project, id_task):
+    task.query.filter_by(id=id_task).delete()
+    db.session.commit()
+    return redirect('/tasks')
+
+@app.route('/project/<id_project>/task/<id_task>')
+@login_required
+@access_to_project_required
+def task_view(id_project, id_task):
+    task = task.query.filter_by(id=id_task).first()
+    return render_template('project/task/view.html', task=task)
